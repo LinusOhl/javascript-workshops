@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>00-test</title>
+  </head>
+  <body>
+    <h1>00-test</h1>
+
+    <div class="container">
+      <div class="userInput">
+        <p id="result">Choose your draw</p>
+        <p><span id="userChoice">?</span> / <span id="aiChoice">?</span></p>
+
+        <p style="font-size: 2rem">Choose your draw!</p>
+        <button onclick="getUserInput('rock')">✊</button>
+        <button onclick="getUserInput('paper')">✋</button>
+        <button onclick="getUserInput('scissor')">✌</button>
+      </div>
+
+      <div class="score">
+        <p style="font-size: 4rem">
+          <span style="color: green" id="userScore">0</span> -
+          <span style="color: brown" id="aiScore">0</span>
+        </p>
+      </div>
+    </div>
+    <script src="scripts.js"></script>
+  </body>
+</html>
