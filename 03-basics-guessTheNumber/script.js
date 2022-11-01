@@ -10,8 +10,6 @@ const hiScore = [];
 const checkGuess = () => {
   let userGuess = Number(prompt("Guess the correct number between 1-10!"));
 
-  // console.log(userGuess, randomNumber);
-
   while (!correctGuess) {
     if (userGuess === 0) {
       console.log("Exited game.");
@@ -34,7 +32,6 @@ const checkGuess = () => {
         console.log("Not a new hiScore, but still a win!");
       }
 
-      // console.log(hiScore);
       correctGuess = true;
     } else if (userGuess != randomNumber) {
       console.log("Wrong!");
