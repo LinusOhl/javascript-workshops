@@ -10,7 +10,7 @@ const hiScore = [];
 const checkGuess = () => {
   let userGuess = Number(prompt("Guess the correct number between 1-10!"));
 
-  console.log(userGuess, randomNumber);
+  // console.log(userGuess, randomNumber);
 
   while (!correctGuess) {
     if (userGuess === 0) {
@@ -21,22 +21,20 @@ const checkGuess = () => {
 
       console.log("Your guesses:", guesses);
 
-      for (let i = 0; i < hiScore.length; i++) {
-        if (hiScore.length === 1) {
-          document.getElementById(
-            "hiScore"
-          ).innerHTML = `Your hiScore: ${hiScore[0]}`;
-        } else if (guesses < Math.min.apply(hiScore)) {
-          document.getElementById(
-            "hiScore"
-          ).innerHTML = `Your hiScore: ${Math.min.apply(Math, hiScore)}`;
-          console.log("New hiScore!");
-        } else if (guesses > Math.min.apply(hiScore)) {
-          console.log("Not a new hiScore, but still a win!");
-        }
+      if (hiScore.length === 1) {
+        document.getElementById(
+          "hiScore"
+        ).innerHTML = `Your hiScore: ${hiScore[0]}`;
+      } else if (guesses < Math.min.apply(hiScore)) {
+        document.getElementById(
+          "hiScore"
+        ).innerHTML = `Your hiScore: ${Math.min.apply(Math, hiScore)}`;
+        console.log("New hiScore!");
+      } else if (guesses > Math.min.apply(hiScore)) {
+        console.log("Not a new hiScore, but still a win!");
       }
 
-      console.log(hiScore);
+      // console.log(hiScore);
       correctGuess = true;
     } else if (userGuess != randomNumber) {
       console.log("Wrong!");
