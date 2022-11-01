@@ -7,7 +7,7 @@ let correctGuess = false;
 let guesses = 1;
 const hiScore = [];
 
-function checkGuess() {
+const checkGuess = () => {
   let userGuess = prompt("Guess the correct number between 1-10!");
   userGuess = Number(userGuess);
 
@@ -49,12 +49,12 @@ function checkGuess() {
       checkGuess();
     }
   }
-}
+};
 
-function playGame() {
+const playGame = () => {
   correctGuess = false;
   guesses = 1;
   randomNumber = getRandomNumber();
 
   checkGuess();
-}
+};
