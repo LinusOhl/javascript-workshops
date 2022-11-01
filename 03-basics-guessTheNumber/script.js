@@ -8,8 +8,7 @@ let guesses = 1;
 const hiScore = [];
 
 const checkGuess = () => {
-  let userGuess = prompt("Guess the correct number between 1-10!");
-  userGuess = Number(userGuess);
+  let userGuess = Number(prompt("Guess the correct number between 1-10!"));
 
   console.log(userGuess, randomNumber);
 
@@ -20,17 +19,19 @@ const checkGuess = () => {
     } else if (userGuess === randomNumber) {
       hiScore.push(guesses);
 
+      console.log("Your guesses:", guesses);
+
       for (let i = 0; i < hiScore.length; i++) {
         if (hiScore.length === 1) {
           document.getElementById(
             "hiScore"
           ).innerHTML = `Your hiScore: ${hiScore[0]}`;
-        } else if (guesses < hiScore[i]) {
+        } else if (guesses < Math.min.apply(hiScore)) {
           document.getElementById(
             "hiScore"
-          ).innerHTML = `Your hiScore: ${guesses}`;
+          ).innerHTML = `Your hiScore: ${Math.min.apply(Math, hiScore)}`;
           console.log("New hiScore!");
-        } else if (guesses > hiScore[i]) {
+        } else if (guesses > Math.min.apply(hiScore)) {
           console.log("Not a new hiScore, but still a win!");
         }
       }
@@ -38,14 +39,15 @@ const checkGuess = () => {
       console.log(hiScore);
       correctGuess = true;
     } else if (userGuess != randomNumber) {
+      console.log("Wrong!");
+      guesses++;
+
       if (userGuess > randomNumber) {
         console.log("Guess too HIGH!");
       } else {
         console.log("Guess too LOW!");
       }
 
-      console.log("Wrong!");
-      guesses++;
       checkGuess();
     }
   }
