@@ -4,7 +4,7 @@ const getRandomNumber = (max = 10) => {
 
 let randomNumber = getRandomNumber();
 let correctGuess = false;
-let guesses = 1;
+let guesses = 0;
 const hiScore = [];
 
 const checkGuess = () => {
@@ -15,6 +15,7 @@ const checkGuess = () => {
       console.log("Exited game.");
       correctGuess = true;
     } else if (userGuess === randomNumber) {
+      guesses++;
       hiScore.push(guesses);
 
       console.log("Your guesses:", guesses);
@@ -50,7 +51,7 @@ const checkGuess = () => {
 
 const playGame = () => {
   correctGuess = false;
-  guesses = 1;
+  guesses = 0;
   randomNumber = getRandomNumber();
 
   checkGuess();
