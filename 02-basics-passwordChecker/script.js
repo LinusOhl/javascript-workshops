@@ -8,14 +8,14 @@
  * - eller har minst 16 tecken
  */
 
-let password;
-password = "password"; // inte giltigt
-// password = "pa$sword"; // giltigt
-// password = "p@ssw%rd"; // giltigt
-// password = "pa$$word"; // giltigt
-// password = "secretpassword"; // inte giltigt
-// password = "secret-password"; // giltigt
-// password = "such-password-much-secure-very-long"; // giltigt
+let password = prompt("Enter a password.");
+// password = "password"; // inte giltigt
+// // password = "pa$sword"; // giltigt
+// // password = "p@ssw%rd"; // giltigt
+// // password = "pa$$word"; // giltigt
+// // password = "secretpassword"; // inte giltigt
+// // password = "secret-password"; // giltigt
+// // password = "such-password-much-secure-very-long"; // giltigt
 
 const specialChars = [
   "@",
@@ -41,19 +41,22 @@ const specialChars = [
 let specialCharsCounter = 0;
 
 // counts how many specialChars are in the password
-for (let i = 0; i < specialChars.length; i++) {
-  if (password.includes(specialChars[i])) {
-    specialCharsCounter++;
+const checkPassword = () => {
+  for (let i = 0; i < specialChars.length; i++) {
+    if (password.includes(specialChars[i])) {
+      specialCharsCounter++;
+    }
   }
-}
+  return specialCharsCounter;
+};
 
 // checks how strong the password is
-if (password.length >= 6 && specialCharsCounter >= 2) {
-  console.log("🟢 Password Very Much Accepted.");
-} else if (password.length >= 8 && specialCharsCounter >= 1) {
-  console.log("🟢 Password Much Accepted.");
+if (password.length >= 6 && checkPassword() >= 2) {
+  alert("🟢 Password Very Much Accepted.");
+} else if (password.length >= 8 && checkPassword() >= 1) {
+  alert("🟢 Password Much Accepted.");
 } else if (password.length >= 16) {
-  console.log("🟢 Password Accepted.");
+  alert("🟢 Password Accepted.");
 } else {
-  console.log("🔴 Password NOT Accepted.");
+  alert("🔴 Password NOT Accepted.");
 }
