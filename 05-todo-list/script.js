@@ -20,7 +20,9 @@
 // get references to DOM elements
 const todosEl = document.querySelector("#todos");
 const newTodoFormEl = document.querySelector("#new-todo-form");
-const submitField = document.querySelector("#newTodo");
+let checkedItem;
+let itemText;
+let editButton;
 
 // list of todos
 const todos = [
@@ -38,25 +40,59 @@ const todos = [
   },
 ];
 
-// loops through todos and displays them on the page, if the todo is completed then it's grayed out
-todos.forEach((todo) => {
-  if (todo.completed === true) {
-    todosEl.innerHTML += `<li class="list-group-item completed">${todo.title}</li>`;
-  } else {
-    todosEl.innerHTML += `<li class="list-group-item">${todo.title}</li>`;
-  }
-});
+// clears the <ul> and renders the todos to the page
+const renderTodos = () => {
+  todosEl.innerHTML = "";
+  todos.forEach((todo) => {
+    if (todo.completed === true) {
+      todosEl.innerHTML += `
+      <li class="list-group-item listItem">
+        <div class="rightSide">
+          <div class="form-check checkBorder">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="flexSwitchCheckDefault"
+              checked
+            />
+          </div>
+          <span class="completed" id="itemContent">${todo.title}</span>
+        </div>
+        <button class="btn btn-secondary" id="editButton">Edit</button>
+      </li>`;
+    } else {
+      todosEl.innerHTML += `
+      <li class="list-group-item listItem">
+        <div class="rightSide">
+          <div class="form-check checkBorder">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="flexSwitchCheckDefault"
+            />
+          </div>
+          <span id="itemContent">${todo.title}</span>
+        </div>
+        <button class="btn btn-secondary" id="editButton">Edit</button>
+      </li>`;
+    }
+  });
+  checkedItem = document.querySelector("#flexSwitchCheckDefault");
+  itemText = document.querySelector("#itemContent");
+  editButton = document.querySelector("#editButton");
+};
+renderTodos();
 
 // adds new todo
 const addTodo = () => {
   todos.push({
-    title: submitField.value,
+    title: newTodoFormEl.newTodo.value,
     completed: false,
   });
 
-  todosEl.innerHTML += `<li class="list-group-item">${submitField.value}</li>`;
+  renderTodos();
 
-  submitField.value = "";
+  newTodoFormEl.reset();
 };
 
 // prevents the page from refreshing when clicking "create"
@@ -67,22 +103,39 @@ newTodoFormEl.addEventListener("submit", (e) => {
 // adds addTodo-function to the create button
 newTodoFormEl.addEventListener("submit", addTodo);
 
-// adds the ability to click the todos in the list to mark them as completed
+// checks if todo is completed or not
 todosEl.addEventListener("click", (e) => {
   for (let i = 0; i < todos.length; i++) {
-    if (e.target.innerHTML === todos[i].title && todos[i].completed === false) {
-      todos[i].completed = true;
-      e.target.classList.toggle("completed");
-
-      console.log(todos[i]);
-    } else if (
-      e.target.innerHTML === todos[i].title &&
-      todos[i].completed === true
-    ) {
-      todos[i].completed = false;
-      e.target.classList.toggle("completed");
-
-      console.log(todos[i]);
+    if (e.target.tagName === "INPUT") {
+      let target = e.target.parentNode.parentNode.childNodes[3];
+      if (target.innerHTML === todos[i].title) {
+        if (e.target.checked) {
+          todos[i].completed = true;
+          console.log("checked");
+        } else {
+          todos[i].completed = false;
+          console.log("unchecked");
+        }
+      }
     }
   }
+  renderTodos();
+});
+
+// change todo
+todosEl.addEventListener("click", (e) => {
+  for (let i = 0; i < todos.length; i++) {
+    if (e.target.tagName === "BUTTON") {
+      let target = e.target.parentNode.childNodes[1].childNodes[3];
+      if (target.innerHTML === todos[i].title) {
+        let _temp = todos[i].title;
+        todos[i].completed = false;
+        todos[i].title = prompt("Change todo", todos[i].title);
+        if (todos[i].title === "" || todos[i].title === null) {
+          todos[i].title = _temp;
+        }
+      }
+    }
+  }
+  renderTodos();
 });

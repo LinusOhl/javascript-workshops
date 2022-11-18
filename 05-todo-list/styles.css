@@ -6,3 +6,19 @@
   text-decoration: line-through;
   color: #888;
 }
+
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rightSide {
+  display: flex;
+  align-items: center;
+}
+
+.checkBorder {
+  margin-right: 0.6rem;
+  border-right: 1px solid lightgray;
+}
