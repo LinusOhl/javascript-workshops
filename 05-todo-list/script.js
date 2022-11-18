@@ -20,12 +20,13 @@
 // get references to DOM elements
 const todosEl = document.querySelector("#todos");
 const newTodoFormEl = document.querySelector("#new-todo-form");
+const clearButton = document.querySelector("#clearButton");
 let checkedItem;
 let itemText;
 let editButton;
 
 // list of todos
-const todos = [
+let todos = [
   {
     title: "Learn basic JavaScript",
     completed: true,
@@ -139,3 +140,12 @@ todosEl.addEventListener("click", (e) => {
   }
   renderTodos();
 });
+
+// clears todo list
+const clearList = () => {
+  todos = [];
+
+  renderTodos();
+};
+
+clearButton.addEventListener("click", clearList);
