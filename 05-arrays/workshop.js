@@ -33,3 +33,18 @@ const year5_male_names = friends
   .filter((friend) => friend.sex === "M" && friend.year === 5)
   .map((friend) => friend.name);
 console.log(year5_male_names);
+
+// average grade of all friends
+const averageGrade = friends.reduce(
+  (sum, friend) => sum + friend.grade / friends.length,
+  0
+);
+console.log(averageGrade);
+
+// average grade of all girls
+const allGirls = friends.filter((friend) => friend.sex === "F");
+const averageGradeGirls = allGirls.reduce(
+  (sum, friend) => sum + friend.grade / allGirls.length,
+  0
+);
+console.log(averageGradeGirls);

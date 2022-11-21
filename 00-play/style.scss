@@ -1,0 +1,49 @@
+$primary-color: #101419;
+$main-text: "Poppins", sans-serif;
+$secondary-color: #fffcf9;
+
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: $main-text;
+  background-color: $primary-color;
+  color: $secondary-color;
+}
+
+.login-container {
+  width: 600px;
+  margin: auto;
+  margin-top: 50px;
+  padding: 2rem;
+  justify-self: center;
+  background-color: $secondary-color;
+  color: $primary-color;
+  border-radius: 15px;
+}
+
+.login-container-header {
+  margin-bottom: 3rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input[type="text"],
+input[type="password"] {
+  border: 2px solid $primary-color;
+  outline: none;
+  margin-bottom: 2rem;
+  font-size: 1.4rem;
+  padding: 1rem;
+  border-radius: 100px;
+}
+
+label {
+  position: relative;
+  display: inline-block;
+  top: 5px;
+  background-color: $secondary-color;
+}
