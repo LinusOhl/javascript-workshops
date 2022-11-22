@@ -31,6 +31,8 @@ const cheatEl = document.querySelector("#cheat");
 const formGuessEl = document.querySelector("#formGuess");
 const inputGuessEl = document.querySelector("#inputGuess");
 const turnoutEl = document.querySelector("#turnout");
+const info = document.querySelector("#info");
+const totalGuesses = document.querySelector("#totalGuesses");
 
 // Get a random number between 1-10
 const getRandomNumber = function (max = 10) {
@@ -52,20 +54,30 @@ formGuessEl.addEventListener("submit", (e) => {
 
   if (Number(inputGuessEl.value) === correctNumber) {
     guesses++;
-    turnoutEl.innerText = `Correct! Your guess was ${inputGuessEl.value}. Total Guesses: ${guesses}`;
+    turnoutEl.innerText = `Correct!`;
+    info.innerText = `Your guess was ${inputGuessEl.value}!`;
+    inputGuessEl.value = "";
   } else if (Number(inputGuessEl.value) < correctNumber) {
     guesses++;
-    turnoutEl.innerText = `Try again. Your guess was too LOW. Total Guesses: ${guesses}`;
+    turnoutEl.innerText = `Try again.`;
+    info.innerText = "Your guess was too LOW.";
+    inputGuessEl.value = "";
   } else if (Number(inputGuessEl.value) > correctNumber) {
     guesses++;
-    turnoutEl.innerText = `Try again. Your guess was too HIGH. Total Guesses: ${guesses}`;
+    turnoutEl.innerText = `Try again.`;
+    info.innerText = "Your guess was too HIGH.";
+    inputGuessEl.value = "";
   }
+
+  totalGuesses.innerText = `Total Guesses: ${guesses}`;
 });
 
 formGuessEl.addEventListener("reset", (e) => {
   e.preventDefault();
 
   turnoutEl.innerText = "";
+  info.innerText = "";
+  totalGuesses.innerText = "";
 
   restartGame();
 });
