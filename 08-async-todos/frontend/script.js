@@ -24,10 +24,28 @@ const newTodoFormEl = document.querySelector("#new-todo-form");
 // list of todos
 let todos = [];
 
+const getTodos = async () => {
+  const data = await fetchTodos();
+
+  todos = data;
+
+  renderTodos();
+};
+
+const fetchTodos = async () => {
+  const response = await fetch("http://localhost:3001/todos");
+
+  if (!response.ok) {
+    throw new Error(
+      `Could not fetch todos: ${response.status} ${response.statusText}`
+    );
+  }
+
+  return await response.json();
+};
+
 // Render todos to DOM
 const renderTodos = () => {
-  console.log("rendering todos...");
-
   const lis = todos.map((todo) => {
     let cssClasses = "list-group-item";
 
@@ -44,30 +62,21 @@ const renderTodos = () => {
 
   todosEl.innerHTML = lis.join("");
 };
-renderTodos();
 
 // Listen for click-events on `#todos` (the `<ul>`)
 todosEl.addEventListener("click", (e) => {
-  // console.log("You clicked on either the whole list, or on a listitem", e.target);
-
   // check if user clicked on a LI element
   if (e.target.tagName === "LI") {
-    // console.log("YAY you clicked on a todo (LI)", e.target);
-    // console.log("The clicked todo's title is:", e.target.innerText);
-
     // get the `data-todo-id` attribute from the LI element
     const clickedTodoId = e.target.dataset.todoId; // `data-todo-id`
-    // console.log("You clicked on the listitem for todo with id:", clickedTodoId);
 
     // search todos for the todo with the id todoId
     const clickedTodo = todos.find((todo) => {
       return todo.id == clickedTodoId;
     });
-    console.log("found clicked todo", clickedTodo);
 
     // change completed-status of found todo
     clickedTodo.completed = !clickedTodo.completed;
-    console.log("toggling todo completed");
 
     // render updated todos
     renderTodos();
@@ -75,54 +84,34 @@ todosEl.addEventListener("click", (e) => {
 });
 
 // Create a new todo when form is submitted
-newTodoFormEl.addEventListener("submit", (e) => {
+newTodoFormEl.addEventListener("submit", async (e) => {
   // Prevent form from being submitted (to the server)
   e.preventDefault();
 
-  // Extract all todo ids
-  // const todoIds = todos.map(todo => todo.id);    // [1, 2, 3]
-  // const maxTodoId = Math.max(...todoIds);   // 3
-  // const newTodoId = maxTodoId + 1;    // 4
-
-  const maxTodoId = todos.reduce((maxId, todo) => {
-    return Math.max(todo.id, maxId);
-
-    // return (todo.id > maxId)
-    // 	? todo.id
-    // 	: maxId;
-
-    // if (todo.id > maxId) {
-    // 	return todo.id;
-    // }
-
-    // return maxId;
-  }, 0);
-  const newTodoId = maxTodoId + 1; // 4
-
-  // Create and push new todo into array
-  todos.push({
-    id: newTodoId,
+  // Create new todo
+  const newTodo = {
     title: newTodoFormEl.newTodo.value,
     completed: false,
-  });
-  console.log("created new todo...");
+  };
 
-  // Render new todo to DOM
-  renderTodos();
+  const response = await fetch("http://localhost:3001/todos", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newTodo),
+  });
+
+  if (!response.ok) {
+    alert("No work.");
+    console.log(response);
+    return;
+  }
+
+  getTodos();
 
   // Empty input field
-  // newTodoFormEl.newTodo.value = '';
-
-  // Reset form
-  newTodoFormEl.reset();
+  newTodoFormEl.newTodo.value = "";
 });
 
-/*
-// STOP USER FROM RESETTING FORM 😈
-newTodoFormEl.addEventListener('reset', e => {
-	// YOU NO RESET FORM, FORM RESETS YOU!
-	e.preventDefault();
-
-	alert("YOU NO RESET FORM, FORM RESETS YOU!");
-});
-*/
+getTodos();
