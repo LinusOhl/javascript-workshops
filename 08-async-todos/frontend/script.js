@@ -24,6 +24,24 @@ const newTodoFormEl = document.querySelector("#new-todo-form");
 // list of todos
 let todos = [];
 
+const createNewTodo = async (data) => {
+  const response = await fetch("http://localhost:3001/todos", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    alert("No work.");
+    console.log(response);
+    return;
+  }
+
+  return await response.json();
+};
+
 const getTodos = async () => {
   const data = await fetchTodos();
 
@@ -94,18 +112,11 @@ newTodoFormEl.addEventListener("submit", async (e) => {
     completed: false,
   };
 
-  const response = await fetch("http://localhost:3001/todos", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(newTodo),
-  });
-
-  if (!response.ok) {
-    alert("No work.");
-    console.log(response);
-    return;
+  try {
+    await createNewTodo(newTodo);
+  } catch (e) {
+    console.log(e);
+    alert(e);
   }
 
   getTodos();
