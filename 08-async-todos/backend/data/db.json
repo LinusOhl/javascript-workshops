@@ -8,7 +8,7 @@
     {
       "id": 2,
       "title": "Learn async JavaScript",
-      "completed": true
+      "completed": false
     },
     {
       "id": 3,
@@ -18,7 +18,12 @@
     {
       "id": 4,
       "title": "Profit 💰",
-      "completed": false
+      "completed": true
+    },
+    {
+      "title": "Buy a car",
+      "completed": true,
+      "id": 5
     }
   ]
 }

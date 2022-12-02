@@ -42,6 +42,24 @@ const createNewTodo = async (data) => {
   return await response.json();
 };
 
+const updateTodo = async (id, data) => {
+  const response = await fetch(`http://localhost:3001/todos/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    alert("No work.");
+    console.log(response);
+    return;
+  }
+
+  return await response.json();
+};
+
 const getTodos = async () => {
   const data = await fetchTodos();
 
@@ -82,7 +100,7 @@ const renderTodos = () => {
 };
 
 // Listen for click-events on `#todos` (the `<ul>`)
-todosEl.addEventListener("click", (e) => {
+todosEl.addEventListener("click", async (e) => {
   // check if user clicked on a LI element
   if (e.target.tagName === "LI") {
     // get the `data-todo-id` attribute from the LI element
@@ -94,10 +112,10 @@ todosEl.addEventListener("click", (e) => {
     });
 
     // change completed-status of found todo
-    clickedTodo.completed = !clickedTodo.completed;
+    await updateTodo(clickedTodo.id, { completed: !clickedTodo.completed });
 
     // render updated todos
-    renderTodos();
+    getTodos();
   }
 });
 
