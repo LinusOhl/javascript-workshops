@@ -1,12 +1,8 @@
+import "bootstrap/dist/css/bootstrap.css";
 import "./style.css";
 
 const newTodoForm = document.querySelector("#new-todo-form");
-const todosList = document.querySelector("#todos")!;
-
-const getRandomNumber = (max: number = 10) => {
-  return Math.ceil(Math.random() * max);
-};
-console.log(getRandomNumber(10));
+const todosList = document.querySelector("#todos");
 
 newTodoForm?.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -15,9 +11,9 @@ newTodoForm?.addEventListener("submit", (e) => {
     document.querySelector<HTMLInputElement>("#new-todo-title")!;
   const newTodoTitle = inputNewTodoTitle.value;
 
-  todosList.innerHTML += `
-    <li>${newTodoTitle}</li>
-  `;
+  if (todosList) {
+    todosList.innerHTML += `<li>${newTodoTitle}</li>`;
+  }
 
   console.log(newTodoTitle);
 });
