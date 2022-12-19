@@ -72,6 +72,8 @@ document.querySelector("#search-form").addEventListener("submit", async (e) => {
 
   const city = e.target.query.value.trim();
 
+  localStorage.setItem("weather_city", city);
+
   if (city.length < 3) {
     renderNotice("Please enter at least 3 chars");
     return;
@@ -88,3 +90,6 @@ document.querySelector("#search-form").addEventListener("submit", async (e) => {
     renderWarning("City not found!");
   }
 });
+
+document.querySelector("#query").value =
+  localStorage.getItem("weather_city") ?? "";
